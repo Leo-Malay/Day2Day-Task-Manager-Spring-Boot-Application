@@ -47,7 +47,7 @@
         <br />
         <strong>Note:</strong> This project is for demonstration purposes only. <br /><br />
         View the source code on GitHub:
-        <a href="https://github.com/your-username/your-repo-name" target="_blank" rel="noopener noreferrer">github.com/your-username/your-repo-name</a>
+        <a href="https://github.com/Leo-Malay/demo-task-manager-spring-boot" target="_blank" rel="noopener noreferrer">https://github.com/Leo-Malay/demo-task-manager-spring-boot</a>
       </p>
     </div>
     <div class="footer small text-center py-2 mt-4">
@@ -70,7 +70,7 @@
               item.innerHTML = `
               <span>${task.title}</span>
               <div>
-                ${!task.complete ? `<button class="btn btn-sm btn-success me-2" onclick="completeTask(${task.id})">Completed</button>` : `<button class="btn btn-sm btn-warning me-2" onclick="incompleteTask(${task.id})">Pending</button>`}
+                ${!task.complete ? `<button class="btn btn-sm btn-success me-2" onclick="completeTask(${task.id})">Move to Completed</button>` : `<button class="btn btn-sm btn-warning me-2" onclick="incompleteTask(${task.id})">Move to Pending</button>`}
                 <button class="btn btn-sm btn-danger" onclick="deleteTask(${task.id})">Remove</button>
               </div>
             `;
