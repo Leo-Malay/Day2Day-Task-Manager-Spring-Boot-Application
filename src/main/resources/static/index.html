@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
+    <!-- Font -->
+
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+    <style>
+      * {
+        /* letter-spacing: 1.5px; */
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+      }
+    </style>
+    <!-- CSS -->
+  </head>
+  <body>
+    <div class="container">
+      <div class="header py-4">
+        <h4 class="mb-4 archivo-black-regular">📝 Task Manager</h4>
+      </div>
+
+      <div class="content">
+        <div class="informForm text-center">
+          <h1 class="mb-4">What's on your Agenda?</h1>
+          <div class="my-3">
+            <input id="taskInput" type="text" class="form-control form-control-lg mx-auto" style="max-width: 600px" />
+          </div>
+          <button class="btn btn-primary rounded-pill px-4" onclick="addTask()">Create Task</button>
+        </div>
+        <div class="container list-group border rounded p-3 my-5">
+          <ul class="p-3" id="taskList"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="aboutWebsite text-center mt-4">
+      <p>
+        This is a simple Task Manager web application built using Java and the Spring Boot framework. It allows users to create, complete, and delete tasks with a clean and responsive interface.
+        <br />
+        <strong>Note:</strong> This project is for demonstration purposes only. <br /><br />
+        View the source code on GitHub:
+        <a href="https://github.com/your-username/your-repo-name" target="_blank" rel="noopener noreferrer">github.com/your-username/your-repo-name</a>
+      </p>
+    </div>
+    <div class="footer small text-center py-2 mt-4">
+      <p>Task Manager built proudly by Malay Bhavsar using Java Spring Boot Framework</p>
+    </div>
+
+    <!-- JS -->
+    <script>
+      const API_URL = "/api/tasks";
+
+      function fetchTasks() {
+        fetch(API_URL)
+          .then((res) => res.json())
+          .then((data) => {
+            const list = document.getElementById("taskList");
+            list.innerHTML = "";
+            data.forEach((task) => {
+              const item = document.createElement("li");
+              item.className = `list-group-item d-flex justify-content-between align-items-center ${task.complete ? "list-group-item-success" : ""}`;
+              item.innerHTML = `
+              <span>${task.title}</span>
+              <div>
+                ${!task.complete ? `<button class="btn btn-sm btn-success me-2" onclick="completeTask(${task.id})">Completed</button>` : `<button class="btn btn-sm btn-warning me-2" onclick="incompleteTask(${task.id})">Pending</button>`}
+                <button class="btn btn-sm btn-danger" onclick="deleteTask(${task.id})">Remove</button>
+              </div>
+            `;
+              list.appendChild(item);
+            });
+          });
+      }
+
+      function addTask() {
+        const input = document.getElementById("taskInput");
+        const title = input.value.trim();
+        if (!title) return;
+
+        fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title }),
+        }).then(() => {
+          input.value = "";
+          fetchTasks();
+        });
+      }
+
+      function completeTask(id) {
+        fetch(`${API_URL}/${id}/complete`, { method: "PUT" }).then(fetchTasks);
+      }
+      function incompleteTask(id) {
+        fetch(`${API_URL}/${id}/incomplete`, { method: "PUT" }).then(fetchTasks);
+      }
+
+      function deleteTask(id) {
+        fetch(`${API_URL}/${id}`, { method: "DELETE" }).then(() => fetchTasks);
+      }
+
+      fetchTasks(); // Initial load
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <!-- JS -->
+  </body>
+</html>
