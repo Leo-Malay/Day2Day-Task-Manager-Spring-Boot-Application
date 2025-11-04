@@ -1,5 +1,6 @@
 package com.example.TaskManager.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +31,7 @@ public class TaskController {
 
     @PostMapping
     public Task createTask(@RequestBody Task task) {
+        task.setCreatedAt(LocalDateTime.now());
         return taskRepo.save(task);
     }
 
@@ -37,6 +39,7 @@ public class TaskController {
     public Task completeTask(@PathVariable Long id) {
         Task task = taskRepo.findById(id).orElseThrow();
         task.setComplete(true);
+        task.setUpdatedAt(LocalDateTime.now());
         return taskRepo.save(task);
     }
 
@@ -44,6 +47,7 @@ public class TaskController {
     public Task incompleteTask(@PathVariable Long id) {
         Task task = taskRepo.findById(id).orElseThrow();
         task.setComplete(false);
+        task.setUpdatedAt(LocalDateTime.now());
         return taskRepo.save(task);
     }
 

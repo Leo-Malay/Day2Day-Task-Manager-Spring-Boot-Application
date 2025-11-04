@@ -1,5 +1,7 @@
 package com.example.TaskManager.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -9,6 +11,8 @@ public class Task {
     private long id;
 
     private String title;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     private boolean complete = false;
 
@@ -23,6 +27,22 @@ public class Task {
 
     public String getTitle() {
         return this.title;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
     }
 
     public void setTitle(String title) {
