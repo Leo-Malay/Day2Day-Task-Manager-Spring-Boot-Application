@@ -40,6 +40,20 @@ mvn spring-boot:run
 
 App will start on `http://localhost:8080/index.html`
 
+### Build Docker Container
+
+This app is enabled with docker container ability. Please use the following commands to dockerized the app.
+
+```bash
+docker build -t day2day-app:<VERSION> .
+```
+
+Now to run the docker app use the following command.
+
+```bash
+docker run -p 8080:8080 day2day-app:<VERSION>
+```
+
 ## Notes
 
 This project is for demonstration and learning purposes only.
